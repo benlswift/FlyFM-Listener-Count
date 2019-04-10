@@ -12,10 +12,11 @@ while(1):
     h = p.decode("utf-8")
     res = h.find("Current Listeners:") + 19
     print (hour,":",minute, " ","Current Listeners: ", h[res],h[res+1])
-    if (minute == 30):
+    if ( 29 < minute < 39):
         datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         dayTime =currentDT.strftime("%A %d-%m-%Y %H00")
         log = dayTime + " Listeners: " + h[res] + h[res+1]
         f= open("log.txt","a")
         f.write(log)
-    time.sleep(10)
+        f.close()
+    time.sleep(600)
