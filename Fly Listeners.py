@@ -6,8 +6,13 @@ import tkinter as tk
 window = tk.Tk()
 window.title("FLY LISTENERS")
 labelfont = ('times', 20, 'bold')
+initialListeners = 0
+midListeners = 0
+endListeners = 0
+peak = 0
+average = 0
 while(1):
-
+    
     currentDT = datetime.now()
     hour = currentDT.hour
     minute = currentDT.minute
@@ -15,15 +20,33 @@ while(1):
     p = html.read()
     h = p.decode("utf-8")
     res = h.find("Current Listeners:") + 19
-    print (hour,":",minute, " ","Current Listeners: ", h[res],h[res+1])
+    listeners = h[res] + h[res+1]
+    intList = int(listeners)
+    print (hour,":",minute, " ","Current Listeners: ", intList)
     label = tk.Label(window, text="Current Listeners: " + h[res],font=("Helvetica", 16)).pack()
     window.update()
-    if ( 29 < minute < 39):
+    if ( 5 < minute < 15):
+        initialListeners = intList
+        
+    elif ( 29 < minute < 39):
         datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        midListeners = intList
+        
+    elif (49 < minute < 59):
+        endListeners = intList
         dayTime =currentDT.strftime("%A %d-%m-%Y %H00")
-        log = dayTime + " Listeners: " + h[res] + h[res+1]
+        average = ((initialListeners + midListeners + endListeners) /3)
+        print (average)
+        peak = initialListeners
+        if (midListeners > peak):
+            peak = midListeners
+            if (endListeners > peak):
+                peak = endListeners
+        elif (endListeners > peak):
+            peak = endListeners
+        log = dayTime + " Average Listeners: " + str(average) + " Peak Listeners: " + str(peak)
         f= open("log.txt","a")
         f.write(log)
         f.close()
-    #getListeners()
-    time.sleep(10)
+        
+    time.sleep(600)
