@@ -28,10 +28,10 @@ while(1):
         datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         midListeners = intList
         
-    elif (49 < minute < 59):
+    elif (49 < minute <= 59):
         endListeners = intList
         dayTime =currentDT.strftime("%A %d-%m-%Y %H00")
-        average = ((initialListeners + midListeners + endListeners) /3)
+        average = int(((initialListeners + midListeners + endListeners) /3))
         peak = initialListeners
         if (midListeners > peak):
             peak = midListeners
